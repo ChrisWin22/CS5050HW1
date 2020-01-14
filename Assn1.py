@@ -8,6 +8,10 @@ def nim2(n):
         return False
     return not(nim2(n-1) and nim2(n-2))
 
+def timeFunction2(n):
+    start = time.time()
+    nim2(n)
+    return time.time() - start
 
 
 def nim(n, array, boolArray):
@@ -45,6 +49,21 @@ def timeFunction(n, array, boolArray):
 #stonesToPlayWith = int(input("Max number of stones you want to play with: "))
 #play(stonesToPlayWith)
 
+def createTimeArray2():
+    array = []
+    n = 0
+    while True:
+        timeToComplete = timeFunction2(n)
+        print (timeToComplete)
+        if timeToComplete > 600:
+            array.append(timeToComplete)
+            return array
+        else:
+            array.append(timeToComplete)
+            n = n + 1
+
+
+
 def createTimeArray():
     array = []
     boolArray = []
@@ -55,16 +74,18 @@ def createTimeArray():
         timeToComplete = timeFunction(n, memArray, boolArray)
         boolArray[n] = True
         memArray.append(timeToComplete)
-        if timeToComplete > 5:
+        if n > 61:
             array.append(timeToComplete)
             return array
         else:
+            print (memArray[n])
             array.append(timeToComplete)
             n = n + 1
 
 print("Booting Up...")
 arrayOfTimes = createTimeArray()
 length = len(arrayOfTimes)
+print (length)
 x = []
 i = 0
 while i < length:
