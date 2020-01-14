@@ -1,13 +1,23 @@
 import time
 import matplotlib.pyplot as plt
 
-
-def nim(n):
+def nim2(n):
     if n == 0:
         return True
     if n == 1:
         return False
-    return not(nim(n-1) and nim(n-2))
+    return not(nim2(n-1) and nim2(n-2))
+
+
+
+def nim(n, array, boolArray):
+    if n == 0:
+        return True
+    if n == 1:
+        return False
+    if boolArray[n] != None:
+        return boolArray[n]
+    return not(nim(n-1, array, boolArray) and nim(n-2, array, boolArray))
 
 def play(stones):
     while stones >= 0:
@@ -19,7 +29,7 @@ def play(stones):
         if stones == 0:
             print("The computer won...")
             break
-        if nim(stones - 1) and stones > 1:
+        if nim2(stones - 1) and stones > 1:
             print("Computer took 2 stones")
             stones = stones - 2
         else:
@@ -27,9 +37,9 @@ def play(stones):
             stones = stones - 1
         print("There are " + str(stones) + " stones left")
 
-def timeFunction(n):
+def timeFunction(n, array, boolArray):
     start = time.time()
-    nim(n)
+    boolArray[n] = nim(n, array, boolArray)
     return time.time() - start
 
 #stonesToPlayWith = int(input("Max number of stones you want to play with: "))
@@ -41,12 +51,10 @@ def createTimeArray():
     memArray = []
     n = 0
     while True:
-        if(boolArray[n] == True):
-            timeToComplete = memArray[n]
-        else:
-            timeToComplete = timeFunction(n)
-            boolArray[n] = True
-            memArray[n] = timeToComplete
+        boolArray.append(None)
+        timeToComplete = timeFunction(n, memArray, boolArray)
+        boolArray[n] = True
+        memArray.append(timeToComplete)
         if timeToComplete > 5:
             array.append(timeToComplete)
             return array
