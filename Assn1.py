@@ -37,10 +37,17 @@ def timeFunction(n):
 
 def createTimeArray():
     array = []
+    boolArray = []
+    memArray = []
     n = 0
     while True:
-        timeToComplete = timeFunction(n)
-        if timeToComplete > 600:
+        if(boolArray[n] == True):
+            timeToComplete = memArray[n]
+        else:
+            timeToComplete = timeFunction(n)
+            boolArray[n] = True
+            memArray[n] = timeToComplete
+        if timeToComplete > 5:
             array.append(timeToComplete)
             return array
         else:
